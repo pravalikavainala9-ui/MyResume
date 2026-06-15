@@ -1,0 +1,6 @@
+{
+  "name": "MatchMyResume",
+  "description": "Tailor your resume to fit target job profiles and roles perfectly. Easily manage your core resume profile, paste your target job descriptions, add notes about the company, and generate AI-crafted custom resumes optimized for applicant tracking systems (ATS) using Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
