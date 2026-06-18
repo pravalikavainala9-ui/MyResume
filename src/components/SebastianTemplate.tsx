@@ -485,8 +485,8 @@ export default function SebastianTemplate({
         WebkitPrintColorAdjust: "exact", 
         colorAdjust: "exact", 
         boxSizing: "border-box",
-        width: "100%",
-        height: "100%",
+        width: "210mm",
+        height: "297mm",
         padding: "14mm 14mm 12mm 14mm"
       }}
     >

@@ -27,7 +27,9 @@ import {
   ArrowRight,
   Info,
   Loader2,
-  FileDown
+  FileDown,
+  Code,
+  Globe
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
@@ -604,6 +606,212 @@ export default function App() {
   // Custom PDF print simulation
   const handlePrint = () => {
     window.print();
+  };
+
+  // High fidelity self-contained HTML download for hosting on GitHub Pages / Web
+  const handleDownloadHTML = () => {
+    try {
+      const element = document.getElementById("resume-to-download");
+      if (!element) {
+        throw new Error("Resume workspace target canvas element was not found.");
+      }
+
+      // Capture the precise inside structure
+      const resumeHtml = element.innerHTML;
+
+      // Build a premium, standalone, fully responsive HTML file
+      // Incorporates Tailwind CSS with the identical custom theme config,
+      // Google Fonts mapping for Inter, Outfit & JetBrains Mono, and print overrides.
+      const fullHtml = `<!DOCTYPE html>
+<html lang="en" class="light" style="color-scheme: light !important;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${coreProfile.fullName || "Resume"} - Professional CV</title>
+  
+  <!-- Tailwind CSS Live CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Integrations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@355;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icon Font CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/lucide-static/font/lucide-static.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slate: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#020617',
+            },
+            blue: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+              1000: '#172554',
+            },
+            teal: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              600: '#0d9488',
+            },
+            emerald: {
+              500: '#10b981',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Base Body overrides */
+    html {
+      color-scheme: light !important;
+      background-color: #f1f5f9 !important;
+    }
+    body {
+      background-color: #f1f5f9 !important;
+      color: #1e293b !important;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Print-ready page setups matching the exact A4 standards */
+    @media print {
+      body {
+        background: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .a4-container {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: none !important;
+      }
+    }
+
+    /* A4 centered container on screen & exact fit */
+    .a4-container {
+      background: white;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      width: 210mm;
+      height: 297mm;
+      min-height: 297mm;
+      max-height: 297mm;
+      margin: 30px auto;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Neutralize app-specific interactive indicators for final presentation */
+    .a4-container li, .a4-container [onClick] {
+      pointer-events: none !important;
+      cursor: default !important;
+      background: none !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
+    /* Lucide icons emulation */
+    .lucide {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800" style="background-color: #f1f5f9 !important; color: #1e293b !important; min-height: 100vh;">
+
+  <!-- Premium Publishing Header (Invisible when printed) -->
+  <div class="no-print bg-slate-950 text-white py-3.5 px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md border-b border-slate-800 font-sans">
+    <div class="flex items-center gap-3">
+      <div class="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black select-none text-sm shadow-sm">
+        CV
+      </div>
+      <div>
+        <h4 class="text-xs font-black tracking-widest uppercase text-slate-100">MatchMyResume HTML Portfolio</h4>
+        <p class="text-[10px] text-slate-400 font-medium">Exported on ${new Date().toLocaleDateString(undefined, { dateStyle: 'long' })} &middot; GitHub publishing & Pages ready</p>
+      </div>
+    </div>
+    
+    <div class="flex flex-wrap items-center gap-2">
+      <button onclick="window.print()" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-extrabold text-[10px] uppercase tracking-wider rounded-lg transition-all flex items-center gap-1.5 cursor-pointer shadow-sm">
+        <i class="lucide-printer text-[11px]"></i> Print / Save PDF
+      </button>
+      <span class="text-slate-700 hidden sm:inline">|</span>
+      <p class="text-[10px] text-slate-400 font-medium hidden md:block">
+        🚀 Save this file as <code class="bg-slate-900 px-1 py-0.5 rounded text-blue-400 font-mono">index.html</code> inside a GitHub repository to host it live for free!
+      </p>
+    </div>
+  </div>
+
+  <!-- Main printable Page content container -->
+  <div class="a4-container">
+    ${resumeHtml}
+  </div>
+
+</body>
+</html>`;
+
+      // Download file action
+      const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const cleanName = coreProfile.fullName ? coreProfile.fullName.trim().replace(/\s+/g, "_") : "Resume";
+      a.href = url;
+      a.download = `${cleanName}_Tailored_Resume.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error("HTML Export error:", e);
+    }
   };
 
   // High fidelity native PDF download with exact layout preservation
@@ -1409,8 +1617,8 @@ export default function App() {
                             className="a4-page bg-white text-left flex flex-col justify-between"
                             style={{ 
                               boxSizing: "border-box",
-                              width: "100%",
-                              height: "100%",
+                              width: "210mm",
+                              height: "297mm",
                               padding: "14mm 14mm 12mm 14mm"
                             }}
                           >
@@ -1708,9 +1916,9 @@ export default function App() {
                 </div>
 
                 <div className="space-y-2 mt-4">
-                  <span className="text-[10px] font-black uppercase text-slate-400 font-mono tracking-widest block">Download Format</span>
+                  <span className="text-[10px] font-black uppercase text-slate-400 font-mono tracking-widest block font-sans">Download Format</span>
                   <p className="text-[11px] text-slate-500 leading-normal font-sans">
-                    Exports as a premium vector, ATS-friendly, high-fidelity single A4 page PDF document.
+                    Exports as a premium vector, ATS-friendly PDF document, or save as a interactive HTML file for hosting live on GitHub Pages or portfolio websites.
                   </p>
                 </div>
               </div>
@@ -1725,7 +1933,18 @@ export default function App() {
                   className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer font-sans"
                 >
                   <FileDown className="h-4 w-4" />
-                  Download Now
+                  Download PDF Now
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowDownloadPreview(false);
+                    handleDownloadHTML();
+                  }}
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer font-sans"
+                >
+                  <Code className="h-4 w-4" />
+                  Download HTML (for GitHub)
                 </button>
                 <button
                   type="button"
